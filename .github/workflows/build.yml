@@ -50,7 +50,7 @@ jobs:
         run: npm install
 
       - name: Build application
-        run: npm run build:${{ matrix.platform }}
+        run: npm run build:${{ matrix.platform }} --publish never
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -100,5 +100,6 @@ jobs:
           draft: false
           prerelease: true
           generate_release_notes: true
+          overwrite: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

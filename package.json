@@ -112,6 +112,14 @@
             "mirror": "https://npmmirror.com/mirrors/electron/"
         },
         "npmRebuild": false,
-        "buildDependenciesFromSource": false
+        "buildDependenciesFromSource": false,
+        "publish": {
+            "provider": "github",
+            "owner": "CalmHarbin",
+            "repo": "quadrant-todo"
+        },
+        "releaseInfo": {
+            "releaseNotes": "四象限TODO桌面应用发布"
+        }
     }
 }
