@@ -50,7 +50,14 @@ jobs:
         run: npm install
 
       - name: Build application
-        run: npm run build:${{ matrix.platform }} --publish never
+        run: |
+          if [ "${{ matrix.platform }}" = "win" ]; then
+            npm run build:win
+          elif [ "${{ matrix.platform }}" = "mac" ]; then
+            npm run build:mac
+          elif [ "${{ matrix.platform }}" = "linux" ]; then
+            npm run build:linux
+          fi
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
