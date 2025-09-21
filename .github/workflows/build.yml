@@ -2,11 +2,14 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version (e.g., v1.0.0)'
+        required: true
+        default: 'v1.0.0'
 
 jobs:
   build:
@@ -66,9 +69,29 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ github.ref_name }}
+          name: 四象限TODO ${{ github.ref_name }}
+          body: |
+            ## 四象限TODO 桌面应用 ${{ github.ref_name }}
+            
+            ### 下载链接
+            - **Windows (x64)**: 下载 `.exe` 安装包
+            - **macOS (Intel)**: 下载 `.dmg` 安装包  
+            - **macOS (Apple Silicon)**: 下载 `.dmg` 安装包
+            - **Linux (x64)**: 下载 `.AppImage` 文件
+            
+            ### 更新内容
+            - 修复了依赖版本兼容性问题
+            - 优化了构建流程
+            - 改进了用户界面
+            
+            ### 使用说明
+            1. 下载对应平台的安装包
+            2. 安装并运行应用
+            3. 开始使用四象限TODO管理你的任务
           files: |
             artifacts/*/release/**/*
           draft: false
-          prerelease: false
+          prerelease: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
