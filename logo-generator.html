@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四象限TODO Logo生成器</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .logo-container {
+            width: 256px;
+            height: 256px;
+            margin: 20px auto;
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .quadrant {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 12px;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .quadrant:hover {
+            transform: scale(1.05);
+        }
+
+        .quadrant-1 {
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            border-radius: 20px 0 0 0;
+        }
+
+        .quadrant-2 {
+            top: 0;
+            right: 0;
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            border-radius: 0 20px 0 0;
+        }
+
+        .quadrant-3 {
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(135deg, #45b7d1, #96c93d);
+            border-radius: 0 0 0 20px;
+        }
+
+        .quadrant-4 {
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 0 0 20px 0;
+        }
+
+        .quadrant-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .quadrant-text {
+            font-size: 10px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .divider-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            z-index: 5;
+        }
+
+        .divider-v {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255,255,255,0.3);
+            z-index: 5;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .preview {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #dee2e6;
+        }
+
+        .preview h3 {
+            margin-top: 0;
+            color: #495057;
+        }
+
+        .logo-preview {
+            width: 128px;
+            height: 128px;
+            margin: 10px auto;
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .logo-preview .quadrant {
+            font-size: 8px;
+        }
+
+        .logo-preview .quadrant-icon {
+            font-size: 16px;
+        }
+
+        .logo-preview .center-circle {
+            width: 30px;
+            height: 30px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>四象限TODO Logo生成器</h1>
+        
+        <div class="logo-container" id="logoCanvas">
+            <div class="quadrant quadrant-1">
+                <div class="quadrant-icon">🔥</div>
+                <div class="quadrant-text">重要<br>紧急</div>
+            </div>
+            <div class="quadrant quadrant-2">
+                <div class="quadrant-icon">📚</div>
+                <div class="quadrant-text">重要<br>不紧急</div>
+            </div>
+            <div class="quadrant quadrant-3">
+                <div class="quadrant-icon">⚡</div>
+                <div class="quadrant-text">紧急<br>不重要</div>
+            </div>
+            <div class="quadrant quadrant-4">
+                <div class="quadrant-icon">🗑️</div>
+                <div class="quadrant-text">不重要<br>不紧急</div>
+            </div>
+            
+            <div class="divider-h"></div>
+            <div class="divider-v"></div>
+            <div class="center-circle">TODO</div>
+        </div>
+
+        <div class="preview">
+            <h3>预览 (128x128)</h3>
+            <div class="logo-preview">
+                <div class="quadrant quadrant-1">
+                    <div class="quadrant-icon">🔥</div>
+                    <div class="quadrant-text">重要<br>紧急</div>
+                </div>
+                <div class="quadrant quadrant-2">
+                    <div class="quadrant-icon">📚</div>
+                    <div class="quadrant-text">重要<br>不紧急</div>
+                </div>
+                <div class="quadrant quadrant-3">
+                    <div class="quadrant-icon">⚡</div>
+                    <div class="quadrant-text">紧急<br>不重要</div>
+                </div>
+                <div class="quadrant quadrant-4">
+                    <div class="quadrant-icon">🗑️</div>
+                    <div class="quadrant-text">不重要<br>不紧急</div>
+                </div>
+                
+                <div class="divider-h"></div>
+                <div class="divider-v"></div>
+                <div class="center-circle">TODO</div>
+            </div>
+        </div>
+
+        <button class="download-btn" onclick="downloadLogo()">下载 PNG (1024x1024)</button>
+        <button class="download-btn" onclick="downloadLogoSmall()">下载 PNG (128x128)</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        function downloadLogo() {
+            const element = document.getElementById('logoCanvas');
+            html2canvas(element, {
+                width: 1024,
+                height: 1024,
+                scale: 1,
+                backgroundColor: '#f8f9fa',
+                useCORS: true,
+                allowTaint: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = '四象限TODO-logo-1024x1024.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+
+        function downloadLogoSmall() {
+            const element = document.querySelector('.logo-preview');
+            html2canvas(element, {
+                width: 128,
+                height: 128,
+                scale: 1,
+                backgroundColor: '#f8f9fa',
+                useCORS: true,
+                allowTaint: true
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.download = '四象限TODO-logo-128x128.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
+

@@ -115,22 +115,29 @@ _深色/浅色主题无缝切换_
 
 </div>
 
-> 💡 **提示**：请将实际截图文件上传到 `screenshots/` 文件夹，并确保文件名与上述链接匹配。
-
 ## 🚀 下载安装
+
+> 📦 **最新版本**: [v1.0.0](https://github.com/CalmHarbin/quadrant-todo/releases/latest)
 
 ### Windows
 
--   [下载安装包](https://github.com/your-username/quadrant-todo/releases/latest/download/四象限TODO-Setup-1.0.0.exe)
--   [免安装版](https://github.com/your-username/quadrant-todo/releases/latest/download/win-unpacked.zip)
+-   [下载安装包](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-Setup-1.0.0.exe)
+-   [便携版](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-win.zip)
 
 ### macOS
 
--   [下载安装包](https://github.com/your-username/quadrant-todo/releases/latest/download/四象限TODO-1.0.0.dmg)
+-   [Intel芯片](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-x64.dmg)
+-   [Apple芯片](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-arm64.dmg)
 
 ### Linux
 
--   [下载 AppImage](https://github.com/your-username/quadrant-todo/releases/latest/download/四象限TODO-1.0.0.AppImage)
+-   [AppImage](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-x86_64.AppImage)
+
+### 📋 安装说明
+
+1. **Windows**: 下载`.exe`安装包，双击运行安装程序
+2. **macOS**: 下载对应芯片版本的`.dmg`文件，拖拽到Applications文件夹
+3. **Linux**: 下载`.AppImage`文件，添加执行权限后运行
 
 ## 🛠️ 技术架构
 
