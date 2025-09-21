@@ -259,6 +259,32 @@
     <script>
         function downloadLogo() {
             const element = document.getElementById('logoCanvas');
+            
+            // 临时调整容器尺寸为1024x1024
+            const originalWidth = element.style.width;
+            const originalHeight = element.style.height;
+            const originalFontSize = element.style.fontSize;
+            
+            element.style.width = '1024px';
+            element.style.height = '1024px';
+            element.style.fontSize = '48px'; // 按比例放大字体
+            
+            // 调整内部元素的字体大小
+            const quadrants = element.querySelectorAll('.quadrant');
+            quadrants.forEach(quadrant => {
+                const icon = quadrant.querySelector('.quadrant-icon');
+                const text = quadrant.querySelector('.quadrant-text');
+                if (icon) icon.style.fontSize = '96px';
+                if (text) text.style.fontSize = '40px';
+            });
+            
+            const centerCircle = element.querySelector('.center-circle');
+            if (centerCircle) {
+                centerCircle.style.width = '240px';
+                centerCircle.style.height = '240px';
+                centerCircle.style.fontSize = '80px';
+            }
+            
             html2canvas(element, {
                 width: 1024,
                 height: 1024,
@@ -267,6 +293,24 @@
                 useCORS: true,
                 allowTaint: true
             }).then(canvas => {
+                // 恢复原始样式
+                element.style.width = originalWidth;
+                element.style.height = originalHeight;
+                element.style.fontSize = originalFontSize;
+                
+                quadrants.forEach(quadrant => {
+                    const icon = quadrant.querySelector('.quadrant-icon');
+                    const text = quadrant.querySelector('.quadrant-text');
+                    if (icon) icon.style.fontSize = '';
+                    if (text) text.style.fontSize = '';
+                });
+                
+                if (centerCircle) {
+                    centerCircle.style.width = '';
+                    centerCircle.style.height = '';
+                    centerCircle.style.fontSize = '';
+                }
+                
                 const link = document.createElement('a');
                 link.download = '四象限TODO-logo-1024x1024.png';
                 link.href = canvas.toDataURL('image/png');

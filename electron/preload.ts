@@ -50,6 +50,32 @@ function withPrototype(obj: any) {
       }
     }
   }
+  
+  // 确保关键方法存在
+  if (!obj.on) {
+    obj.on = function (channel: string, func: (...args: any[]) => void) {
+      return ipcRenderer.on(channel, func)
+    }
+  }
+  
+  if (!obj.removeAllListeners) {
+    obj.removeAllListeners = function (channel: string) {
+      return ipcRenderer.removeAllListeners(channel)
+    }
+  }
+  
+  if (!obj.send) {
+    obj.send = function (channel: string, ...args: any[]) {
+      return ipcRenderer.send(channel, ...args)
+    }
+  }
+  
+  if (!obj.invoke) {
+    obj.invoke = function (channel: string, ...args: any[]) {
+      return ipcRenderer.invoke(channel, ...args)
+    }
+  }
+  
   return obj
 }
 

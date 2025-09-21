@@ -1475,22 +1475,26 @@ onMounted(async () => {
   document.addEventListener('click', handleClickOutside)
 
   // 添加窗口状态变化监听器
-  if (typeof window !== 'undefined' && window.ipcRenderer) {
-    window.ipcRenderer.on('fullscreen-changed', (_, isMaximizedState) => {
-      isMaximized.value = isMaximizedState
-    })
-    
-    // 监听窗口显示事件，用于修复最小化后恢复的样式问题
-    window.ipcRenderer.on('window-shown', async () => {
-      // 自动切换到展开状态
-      isExpanded.value = true
-      isCollapsed.value = false
+  if (typeof window !== 'undefined' && window.ipcRenderer && typeof window.ipcRenderer.on === 'function') {
+    try {
+      window.ipcRenderer.on('fullscreen-changed', (_, isMaximizedState) => {
+        isMaximized.value = isMaximizedState
+      })
       
-      // 延迟修复，确保窗口完全显示后再进行修复
-      setTimeout(() => {
-        fixWindowRestoreStyles()
-      }, 100)
-    })
+      // 监听窗口显示事件，用于修复最小化后恢复的样式问题
+      window.ipcRenderer.on('window-shown', async () => {
+        // 自动切换到展开状态
+        isExpanded.value = true
+        isCollapsed.value = false
+        
+        // 延迟修复，确保窗口完全显示后再进行修复
+        setTimeout(() => {
+          fixWindowRestoreStyles()
+        }, 100)
+      })
+    } catch (error) {
+      console.warn('Failed to set up IPC listeners:', error)
+    }
   }
 
   // 添加窗口焦点监听器，当主窗口重新获得焦点时重新加载数据
@@ -1593,55 +1597,59 @@ onMounted(async () => {
     })
     
     // 通过 IPC 监听窗口位置变化（如果支持）
-    if (window.ipcRenderer) {
-      window.ipcRenderer.on('window-moved', (_, position) => {
-        // 检查窗口是否接近屏幕顶部
-        if (position.y < 10 && !isExpanded.value) {
-          // 窗口移动到顶部，自动折叠
-          // 添加防抖机制，避免频繁触发
-          if (!isDraggingToTop.value) {
-            // 防抖机制，避免频繁切换
-            const now = Date.now();
-            if (now - lastToggleTime.value < 300) return;
-            
-            isCollapsed.value = true
-            isDraggingToTop.value = true
-            lastToggleTime.value = now;
-          }
-        } else {
-          // 窗口离开顶部，重置状态
-          isDraggingToTop.value = false
-        }
-      })
-
-      // 监听窗口吸顶状态变化
-      window.ipcRenderer.on('window-docked', (_, data) => {
-        if (data.docked) {
-          // 窗口已吸顶，确保应用处于折叠状态
-          isWindowDocked.value = true
-          isCollapsed.value = true
-          isExpanded.value = false
-          
-          // 如果主进程传递了原始尺寸信息，保存到beforeCollapseSize
-          if (data.originalHeight && data.originalWidth) {
-            beforeCollapseSize.value = {
-              width: data.originalWidth,
-              height: data.originalHeight
+    if (window.ipcRenderer && typeof window.ipcRenderer.on === 'function') {
+      try {
+        window.ipcRenderer.on('window-moved', (_, position) => {
+          // 检查窗口是否接近屏幕顶部
+          if (position.y < 10 && !isExpanded.value) {
+            // 窗口移动到顶部，自动折叠
+            // 添加防抖机制，避免频繁触发
+            if (!isDraggingToTop.value) {
+              // 防抖机制，避免频繁切换
+              const now = Date.now();
+              if (now - lastToggleTime.value < 300) return;
+              
+              isCollapsed.value = true
+              isDraggingToTop.value = true
+              lastToggleTime.value = now;
             }
+          } else {
+            // 窗口离开顶部，重置状态
+            isDraggingToTop.value = false
           }
-          
-        } else {
-          // 窗口取消吸顶，可以恢复展开状态
-          isWindowDocked.value = false
-          
-          // 如果明确标记为展开，则设置展开状态
-          if (data.expanded) {
-            isExpanded.value = true
-            isCollapsed.value = false
+        })
+
+        // 监听窗口吸顶状态变化
+        window.ipcRenderer.on('window-docked', (_, data) => {
+          if (data.docked) {
+            // 窗口已吸顶，确保应用处于折叠状态
+            isWindowDocked.value = true
+            isCollapsed.value = true
+            isExpanded.value = false
+            
+            // 如果主进程传递了原始尺寸信息，保存到beforeCollapseSize
+            if (data.originalHeight && data.originalWidth) {
+              beforeCollapseSize.value = {
+                width: data.originalWidth,
+                height: data.originalHeight
+              }
+            }
+            
+          } else {
+            // 窗口取消吸顶，可以恢复展开状态
+            isWindowDocked.value = false
+            
+            // 如果明确标记为展开，则设置展开状态
+            if (data.expanded) {
+              isExpanded.value = true
+              isCollapsed.value = false
+            }
+            
           }
-          
-        }
-      })
+        })
+      } catch (error) {
+        console.warn('Failed to set up window position listeners:', error)
+      }
     }
     
     // 定期检查窗口位置（备用方案）
