@@ -43,7 +43,7 @@
         "@milkdown/preset-commonmark": "^7.3.4",
         "@milkdown/theme-nord": "^7.3.4",
         "@milkdown/vue": "^7.3.4",
-        "@prosemirror-adapter/vue": "^0.2.6",
+        "@prosemirror-adapter/vue": "^0.4.2",
         "@types/jszip": "^3.4.0",
         "@vicons/ionicons5": "^0.13.0",
         "@vueuse/integrations": "^13.9.0",
