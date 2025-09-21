@@ -1,0 +1,40 @@
+name: Create Initial Release
+
+on:
+  workflow_dispatch:  # 手动触发
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create Initial Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.0
+          release_name: 四象限TODO v1.0.0
+          body: |
+            ## 四象限TODO 桌面应用 v1.0.0
+            
+            ### 功能特色
+            - 🎯 基于艾森豪威尔矩阵的任务管理
+            - 🖱️ 直观的拖拽操作
+            - 📝 富文本编辑器支持
+            - 🎨 深色/浅色主题切换
+            - 💾 本地数据存储
+            
+            ### 下载说明
+            请等待自动构建完成后，从 [Releases页面](https://github.com/CalmHarbin/quadrant-todo/releases) 下载对应平台的安装包。
+            
+            ### 使用指南
+            1. 下载并安装应用
+            2. 将任务按重要性和紧急性分类到四个象限
+            3. 使用拖拽功能调整任务优先级
+            4. 享受高效的任务管理体验
+          draft: false
+          prerelease: false

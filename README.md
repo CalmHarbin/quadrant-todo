@@ -117,21 +117,19 @@ _深色/浅色主题无缝切换_
 
 ## 🚀 下载安装
 
-> 📦 **最新版本**: [v1.0.0](https://github.com/CalmHarbin/quadrant-todo/releases/latest)
+> 📦 **最新版本**: [查看所有版本](https://github.com/CalmHarbin/quadrant-todo/releases)
 
-### Windows
+### 快速下载
 
--   [下载安装包](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-Setup-1.0.0.exe)
--   [便携版](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-win.zip)
+-   **Windows**: [下载 Windows 版本](https://github.com/CalmHarbin/quadrant-todo/releases/latest)
+-   **macOS**: [下载 macOS 版本](https://github.com/CalmHarbin/quadrant-todo/releases/latest)  
+-   **Linux**: [下载 Linux 版本](https://github.com/CalmHarbin/quadrant-todo/releases/latest)
 
-### macOS
+### 平台说明
 
--   [Intel芯片](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-x64.dmg)
--   [Apple芯片](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-arm64.dmg)
-
-### Linux
-
--   [AppImage](https://github.com/CalmHarbin/quadrant-todo/releases/latest/download/四象限TODO-1.0.0-x86_64.AppImage)
+-   **Windows**: 提供 `.exe` 安装包和便携版
+-   **macOS**: 支持 Intel 和 Apple Silicon 芯片
+-   **Linux**: 提供 `.AppImage` 通用安装包
 
 ### 📋 安装说明
 
