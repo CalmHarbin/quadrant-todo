@@ -49,15 +49,21 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build application
-        run: |
-          if [ "${{ matrix.platform }}" = "win" ]; then
-            npm run build:win
-          elif [ "${{ matrix.platform }}" = "mac" ]; then
-            npm run build:mac
-          elif [ "${{ matrix.platform }}" = "linux" ]; then
-            npm run build:linux
-          fi
+      - name: Build Windows
+        if: matrix.platform == 'win'
+        run: npm run build:win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build macOS
+        if: matrix.platform == 'mac'
+        run: npm run build:mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Linux
+        if: matrix.platform == 'linux'
+        run: npm run build:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
