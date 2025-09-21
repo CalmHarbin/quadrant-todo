@@ -1,0 +1,179 @@
+/* 自定义标题栏样式 */
+.custom-titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 32px;
+    background: var(--toolbar-bg);
+    -webkit-app-region: drag; /* 直接启用拖拽 */
+    padding: 0 12px;
+    /* 移除标题栏底部边框线 */
+    user-select: none;
+    position: relative;
+    z-index: 100;
+    transition: cursor 0.2s ease;
+    cursor: move; /* 设置鼠标形状为移动 */
+    flex-shrink: 0; /* 防止标题栏被压缩 */
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 标题栏左侧区域 - 允许拖拽 */
+.titlebar-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--toolbar-text);
+    /* 移除 -webkit-app-region: no-drag，让父元素的拖拽设置生效 */
+    flex: 1;
+    height: 100%;
+    position: relative;
+}
+
+/* 标题栏右侧区域 - 不允许拖拽，以便响应鼠标事件 */
+.titlebar-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    -webkit-app-region: no-drag; /* 按钮区域不允许拖拽 */
+    height: 100%;
+}
+
+.app-icon {
+    font-size: 16px;
+}
+
+.titlebar-title {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.titlebar-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--toolbar-text);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: normal;
+    transition: background-color 0.2s ease;
+    -webkit-app-region: no-drag;
+    outline: none; /* 移除focus时的outline */
+}
+
+.titlebar-btn:focus {
+    outline: none; /* 确保focus时没有outline */
+}
+
+.titlebar-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.titlebar-btn.close-btn:hover {
+    background: #ff5f56;
+    color: white;
+}
+
+.titlebar-btn.minimize-btn:hover {
+    background: #ffbd2e;
+    color: white;
+}
+
+.titlebar-btn.mode-btn:hover {
+    background: #28a745;
+    color: white;
+}
+
+.titlebar-btn.pin-btn:hover {
+    background: #17a2b8;
+    color: white;
+}
+
+.titlebar-btn.fullscreen-btn:hover {
+    background: #6f42c1;
+    color: white;
+}
+
+.titlebar-btn.toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.titlebar-btn.toggle-btn {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.btn-icon {
+    line-height: 1;
+    display: block;
+}
+
+/* 下拉菜单 */
+.titlebar-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* 确保鼠标悬停时菜单保持显示 */
+.titlebar-dropdown:hover .dropdown-menu {
+    display: block !important;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--toolbar-bg);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 4px 0;
+    min-width: 160px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    /* 确保菜单紧贴按钮，没有间隙 */
+    margin-top: 0;
+    /* 添加一个透明的连接区域 */
+    &::before {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: transparent;
+    }
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    text-align: left;
+    background: transparent;
+    border: none;
+    color: var(--toolbar-text);
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 深色主题下拉菜单 */
+[data-theme='dark'] .dropdown-menu {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* 折叠状态下的标题栏样式 */
+.app.collapsed .custom-titlebar {
+    height: 100%; /* 在折叠状态下，标题栏填充整个窗口高度 */
+    min-height: 32px; /* 保持最小高度 */
+}

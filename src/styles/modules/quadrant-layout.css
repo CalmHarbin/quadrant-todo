@@ -1,0 +1,329 @@
+/* 四象限网格布局 */
+.quadrant-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    min-height: 0; /* 确保grid能正确收缩 */
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
+.app.collapsed .quadrant-grid {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+/* 象限样式 */
+.quadrant {
+    background: #ffffff;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    border: 1px solid #e0e0e0;
+}
+
+[data-theme='dark'] .quadrant {
+    background: #2a2a2a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* 象限特定颜色 */
+.urgent-important {
+    border-left: 4px solid #ff4757;
+}
+
+.important-not-urgent {
+    border-left: 4px solid #3742fa;
+}
+
+.urgent-not-important {
+    border-left: 4px solid #ffa502;
+}
+
+.not-urgent-not-important {
+    border-left: 4px solid #2ed573;
+}
+
+/* 象限头部 */
+.quadrant-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    padding-left: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.quadrant-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text-color);
+}
+
+/* 添加按钮样式 */
+.add-button {
+    font-size: 16px !important;
+    font-weight: normal !important;
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+    min-height: 32px !important;
+    border-radius: 50% !important;
+    transition: all 0.2s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0 !important;
+}
+
+.add-button:hover {
+    transform: scale(1.1) !important;
+    background: rgba(64, 169, 255, 0.1) !important;
+}
+
+[data-theme='dark'] .add-button {
+    color: #e0e0e0 !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme='dark'] .add-button:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    color: #fff !important;
+}
+
+/* 备忘录列表 */
+.memo-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+    position: relative;
+}
+
+/* 四象限滚动条样式 - 悬停时显示 */
+.memo-list::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+.memo-list::-webkit-scrollbar-track {
+    background: transparent !important;
+    border-radius: 8px !important;
+}
+
+.memo-list::-webkit-scrollbar-thumb {
+    background: transparent !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+.memo-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 四象限悬停时显示滚动条 */
+.memo-list:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border-radius: 8px !important;
+}
+
+.memo-list:hover::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-radius: 8px !important;
+}
+
+/* 深色主题四象限滚动条 */
+[data-theme='dark'] .memo-list::-webkit-scrollbar-track {
+    background: transparent !important;
+    border-radius: 8px !important;
+}
+
+[data-theme='dark'] .memo-list::-webkit-scrollbar-thumb {
+    background: transparent !important;
+    border-radius: 8px !important;
+}
+
+[data-theme='dark'] .memo-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-theme='dark'] .memo-list:hover::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
+}
+
+[data-theme='dark'] .memo-list:hover::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-radius: 8px !important;
+}
+
+/* 空状态时隐藏滚动条 */
+.memo-list:has(.empty-quadrant-state) {
+    overflow: hidden;
+    padding-right: 0;
+    height: 100%;
+}
+
+/* 备忘录头部布局 */
+.memo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+/* 空状态展示样式 */
+.empty-quadrant-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    padding: clamp(8px, 2vw, 25px);
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    gap: clamp(4px, 1vw, 12px);
+    min-height: 100px; /* 确保最小高度 */
+}
+
+.empty-icon {
+    font-size: clamp(24px, 3.5vw, 48px);
+    opacity: 0.8;
+    animation: bounce 2s infinite;
+    flex-shrink: 0;
+    margin-bottom: clamp(2px, 0.5vw, 4px);
+}
+
+.empty-title {
+    font-size: clamp(14px, 2.2vw, 18px);
+    font-weight: 600;
+    color: var(--text-color);
+    flex-shrink: 0;
+    margin-bottom: clamp(1px, 0.3vw, 2px);
+    line-height: 1.3;
+}
+
+.empty-description {
+    font-size: clamp(11px, 1.6vw, 14px);
+    color: #666;
+    line-height: 1.4;
+    max-width: min(180px, 85%);
+    flex-shrink: 0;
+    margin-bottom: clamp(1px, 0.3vw, 2px);
+}
+
+.empty-hint {
+    font-size: clamp(9px, 1.3vw, 12px);
+    color: #555;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+    padding: clamp(6px, 1vw, 12px) clamp(10px, 1.5vw, 16px);
+    border-radius: 8px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    max-width: min(160px, 85%);
+    line-height: 1.3;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.8s ease-out 0.3s both;
+}
+
+.empty-hint::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+    border-radius: 12px 12px 0 0;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.empty-hint::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+.empty-hint:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* 深色主题空状态 */
+[data-theme='dark'] .empty-description {
+    color: #bbb;
+}
+
+[data-theme='dark'] .empty-hint {
+    color: #e2e8f0;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.9) 100%);
+    border-color: rgba(71, 85, 105, 0.6);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2), 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme='dark'] .empty-hint::before {
+    background: linear-gradient(90deg, #60a5fa, #a78bfa, #22d3ee);
+}
+
+[data-theme='dark'] .empty-hint:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.4);
+    border-color: rgba(96, 165, 250, 0.4);
+}
+
+/* 象限特定的建议提示框样式 */
+.urgent-important .empty-hint::before {
+    background: linear-gradient(90deg, #ef4444, #f97316, #f59e0b);
+}
+
+.important-not-urgent .empty-hint::before {
+    background: linear-gradient(90deg, #3b82f6, #6366f1, #8b5cf6);
+}
+
+.urgent-not-important .empty-hint::before {
+    background: linear-gradient(90deg, #f59e0b, #eab308, #84cc16);
+}
+
+.not-urgent-not-important .empty-hint::before {
+    background: linear-gradient(90deg, #6b7280, #9ca3af, #d1d5db);
+}
+
+/* 深色主题象限特定样式 */
+[data-theme='dark'] .urgent-important .empty-hint::before {
+    background: linear-gradient(90deg, #f87171, #fb923c, #fbbf24);
+}
+
+[data-theme='dark'] .important-not-urgent .empty-hint::before {
+    background: linear-gradient(90deg, #60a5fa, #818cf8, #a78bfa);
+}
+
+[data-theme='dark'] .urgent-not-important .empty-hint::before {
+    background: linear-gradient(90deg, #fbbf24, #fde047, #bef264);
+}
+
+[data-theme='dark'] .not-urgent-not-important .empty-hint::before {
+    background: linear-gradient(90deg, #9ca3af, #d1d5db, #e5e7eb);
+}

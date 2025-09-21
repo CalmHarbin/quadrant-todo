@@ -1,0 +1,78 @@
+/* 全局样式重置，确保窗口大小正确 */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* 应用主容器 */
+.app {
+    height: 100vh; /* 使用视口高度，确保最大化时正确填充 */
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, color 0.3s ease;
+    will-change: height;
+}
+
+/* 折叠状态 */
+.app.collapsed {
+    height: 100%; /* 使用窗口的实际高度 */
+    overflow: hidden;
+}
+
+/* 展开状态 */
+.app.expanded {
+    height: 100vh; /* 使用视口高度，确保最大化时正确填充 */
+    min-height: 100vh; /* 确保最小高度为视口高度 */
+}
+
+/* 主题变量定义 */
+.app[data-theme='light'] {
+    --bg-color: #ffffff;
+    --text-color: #2c3e50;
+    --toolbar-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --toolbar-text: #fff;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --radius: 8px;
+    --modal-bg: #ffffff;
+    --modal-header-bg: #fafafa;
+    --modal-footer-bg: #fafafa;
+    --button-bg: #ffffff;
+    --button-hover-bg: #f5f5f5;
+    --hover-bg: #f5f5f5;
+}
+
+.app[data-theme='dark'] {
+    --bg-color: #1e1e1e;
+    --text-color: #f8f9fa;
+    --toolbar-bg: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    --toolbar-text: #fff;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --radius: 8px;
+    --modal-bg: #2a2a2a;
+    --modal-header-bg: #333333;
+    --modal-footer-bg: #333333;
+    --button-bg: #404040;
+    --button-hover-bg: #4a4a4a;
+    --hover-bg: #404040;
+}
+
+/* 主要内容区域 */
+.main-content {
+    flex: 1;
+    overflow: hidden;
+    min-height: 0; /* 确保flex子元素能正确收缩 */
+    transition: flex 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: flex, height, opacity;
+}
+
+.app.collapsed .main-content {
+    flex: 0;
+    height: 0;
+    opacity: 0;
+}

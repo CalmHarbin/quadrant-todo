@@ -7,9 +7,11 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build && electron-builder",
-        "build:win": "vite build && electron-builder --win",
+        "build:win": "vite build && electron-builder --config electron-builder.json --win --x64",
+        "build:win:portable": "vite build && electron-builder --win portable --x64 --publish never",
+        "build:dir": "vite build && electron-builder --dir",
         "build:mac": "vite build && electron-builder --mac",
-        "build:linux": "vite build && electron-builder --linux",
+        "build:linux": "vite build && electron-builder --linux --x64",
         "type-check": "vue-tsc --noEmit",
         "preview": "vite preview",
         "electron:dev": "vite build && electron .",
@@ -44,10 +46,13 @@
         "@prosemirror-adapter/vue": "^0.2.6",
         "@types/jszip": "^3.4.0",
         "@vicons/ionicons5": "^0.13.0",
+        "@vueuse/integrations": "^13.9.0",
         "jszip": "^3.10.1",
         "naive-ui": "^2.38.1",
         "pinia": "^2.1.7",
-        "vue": "^3.4.15"
+        "sortablejs": "^1.15.6",
+        "vue": "^3.4.15",
+        "vuedraggable": "^4.1.0"
     },
     "build": {
         "appId": "com.example.quadrant-todo",
@@ -68,11 +73,45 @@
                         "x64"
                     ]
                 }
-            ]
+            ],
+            "requestedExecutionLevel": "asInvoker",
+            "icon": "resources/icon.png"
         },
         "nsis": {
             "oneClick": false,
-            "allowToChangeInstallationDirectory": true
-        }
+            "allowToChangeInstallationDirectory": true,
+            "createDesktopShortcut": true,
+            "createStartMenuShortcut": true
+        },
+        "mac": {
+            "target": [
+                {
+                    "target": "dmg",
+                    "arch": ["x64", "arm64"]
+                }
+            ],
+            "icon": "resources/icon.png",
+            "category": "public.app-category.productivity"
+        },
+        "dmg": {
+            "title": "四象限TODO ${version}",
+            "icon": "resources/icon.png"
+        },
+        "linux": {
+            "target": [
+                {
+                    "target": "AppImage",
+                    "arch": ["x64"]
+                }
+            ],
+            "icon": "resources/icon.png",
+            "category": "Office"
+        },
+        "electronDownload": {
+            "cache": "./node_modules/.cache/electron",
+            "mirror": "https://npmmirror.com/mirrors/electron/"
+        },
+        "npmRebuild": false,
+        "buildDependenciesFromSource": false
     }
 }

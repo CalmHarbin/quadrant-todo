@@ -2,7 +2,24 @@ const { contextBridge, ipcRenderer } = require('electron')
 
 // Custom APIs for renderer
 const api = {
-  // TODO: 添加更多安全的 API 暴露
+  // 窗口控制 API
+  minimize: () => ipcRenderer.invoke('window-minimize'),
+  maximize: () => ipcRenderer.invoke('window-maximize'),
+  close: () => ipcRenderer.invoke('window-close'),
+  quitApp: () => ipcRenderer.invoke('app-quit'),
+  show: () => ipcRenderer.invoke('window-show'),
+  startDrag: (x: number, y: number) => ipcRenderer.invoke('window-start-drag', x, y),
+  setWindowMode: (isWidget: boolean) => ipcRenderer.invoke('window-set-mode', isWidget),
+  setPinToDesktop: (isPinned: boolean) => ipcRenderer.invoke('window-set-pin', isPinned),
+  setMaximize: (isMaximize: boolean) => ipcRenderer.invoke('window-set-fullscreen', isMaximize),
+  resizeWindow: (width: number, height: number) => ipcRenderer.invoke('window-resize', width, height),
+  getWindowSize: () => ipcRenderer.invoke('window-get-size'),
+  expandDockedWindow: () => ipcRenderer.invoke('window-expand-docked'),
+  createModalWindow: (modalType: string, data?: any) => ipcRenderer.invoke('create-modal-window', modalType, data),
+  closeModalWindow: (windowId?: number) => ipcRenderer.invoke('close-modal-window', windowId),
+  on: (channel: string, func: (...args: any[]) => void) => ipcRenderer.on(channel, func),
+  removeAllListeners: (channel: string) => ipcRenderer.removeAllListeners(channel),
+  send: (channel: string, ...args: any[]) => ipcRenderer.send(channel, ...args)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
@@ -135,6 +152,17 @@ const dbAPI = {
       }
     } catch (error) {
       console.error('Failed to update memo:', error)
+      return { success: false, error: String(error) }
+    }
+  },
+
+  // 直接保存数据数组
+  saveData: async (data: any[]) => {
+    try {
+      const result = await ipcRenderer.invoke('save-data', data)
+      return result
+    } catch (error) {
+      console.error('Failed to save data:', error)
       return { success: false, error: String(error) }
     }
   },
@@ -273,6 +301,39 @@ const dbAPI = {
       return result
     } catch (error) {
       console.error('Failed to open directory:', error)
+      return { success: false, error: String(error) }
+    }
+  },
+
+  // 重启应用
+  restartApp: async () => {
+    try {
+      await ipcRenderer.invoke('restart-app')
+      return { success: true }
+    } catch (error) {
+      console.error('Failed to restart app:', error)
+      return { success: false, error: String(error) }
+    }
+  },
+
+  // 立即重启应用
+  restartAppNow: () => {
+    try {
+      ipcRenderer.send('restart-app-now')
+      return { success: true }
+    } catch (error) {
+      console.error('Failed to restart app now:', error)
+      return { success: false, error: String(error) }
+    }
+  },
+
+  // 复制图片到剪贴板
+  copyImageToClipboard: async (imageData: string) => {
+    try {
+      const result = await ipcRenderer.invoke('copy-image-to-clipboard', imageData)
+      return result
+    } catch (error) {
+      console.error('Failed to copy image to clipboard:', error)
       return { success: false, error: String(error) }
     }
   }

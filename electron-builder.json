@@ -1,0 +1,37 @@
+{
+    "appId": "com.example.quadrant-todo",
+    "productName": "四象限TODO",
+    "directories": {
+        "output": "release/${version}",
+        "buildResources": "build"
+    },
+    "files": [
+        "dist/**/*",
+        "dist-electron/**/*",
+        "resources/**/*"
+    ],
+    "win": {
+        "target": [
+            {
+                "target": "nsis",
+                "arch": [
+                    "x64"
+                ]
+            }
+        ],
+        "requestedExecutionLevel": "asInvoker",
+        "icon": "resources/icon.png"
+    },
+    "nsis": {
+        "oneClick": false,
+        "allowToChangeInstallationDirectory": true,
+        "createDesktopShortcut": true,
+        "createStartMenuShortcut": true,
+        "shortcutName": "四象限TODO"
+    },
+    "npmRebuild": false,
+    "buildDependenciesFromSource": false,
+    "electronDownload": {
+        "cache": "./node_modules/.cache/electron"
+    }
+}

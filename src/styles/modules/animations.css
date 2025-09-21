@@ -1,0 +1,123 @@
+/* 动画效果 */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes dropIndicatorFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+        height: 0;
+        padding: 0 8px;
+        margin-bottom: 0;
+    }
+    to {
+        opacity: 0.6;
+        transform: scale(1);
+        height: auto;
+        padding: 1px 8px;
+        margin-bottom: 2px;
+    }
+}
+
+@keyframes placeholderAppear {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+        height: 0;
+        padding: 0 8px;
+        margin-bottom: 0;
+    }
+    to {
+        opacity: 0.6;
+        transform: scale(1);
+        height: auto;
+        padding: 1px 8px;
+        margin-bottom: 2px;
+    }
+}
+
+@keyframes slideInPreview {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
+        box-shadow: 0 0 0 rgba(64, 169, 255, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1.02);
+        box-shadow: 0 2px 8px rgba(64, 169, 255, 0.15);
+    }
+}
+
+@keyframes dragPreviewAppear {
+    from {
+        opacity: 0;
+        transform: rotate(-1deg) scale(0.8);
+    }
+    to {
+        opacity: 0.95;
+        transform: rotate(-1deg) scale(1.05);
+    }
+}
+
+@keyframes draggingFloat {
+    from {
+        transform: rotate(8deg) scale(0.95) translateY(0px);
+    }
+    to {
+        transform: rotate(8deg) scale(0.95) translateY(-2px);
+    }
+}
+
+@keyframes longPressReady {
+    from {
+        box-shadow: 0 8px 24px rgba(64, 169, 255, 0.4);
+    }
+    to {
+        box-shadow: 0 12px 32px rgba(64, 169, 255, 0.6);
+    }
+}
+
+[data-theme='dark'] .empty-hint-text {
+    color: #666;
+}

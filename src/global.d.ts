@@ -36,6 +36,11 @@ declare global {
         error?: string
       }>
       
+      saveData: (data: Memo[]) => Promise<{
+        success: boolean
+        error?: string
+      }>
+      
       exportPackage: (theme?: string) => Promise<{
         success: boolean
         data?: ArrayBuffer
@@ -121,7 +126,12 @@ declare global {
     
     // Electron API
     electronAPI: any
-    ipcRenderer: any
+    ipcRenderer: {
+      on: (channel: string, func: (...args: any[]) => void) => void
+      removeAllListeners: (channel: string) => void
+      send: (channel: string, ...args: any[]) => void
+      invoke: (channel: string, ...args: any[]) => Promise<any>
+    }
   }
 }
 

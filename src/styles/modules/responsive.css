@@ -1,0 +1,70 @@
+/* 响应式设计 */
+@media (max-width: 400px) {
+    .quadrant-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+    }
+
+    .main-content {
+        padding: 10px;
+    }
+}
+
+/* 极小窗口下的空状态优化 */
+@media (max-width: 600px) {
+    .empty-quadrant-state {
+        padding: clamp(6px, 1.5vw, 20px);
+        gap: clamp(3px, 0.8vw, 10px);
+        min-height: 80px;
+    }
+    
+    .empty-icon {
+        font-size: clamp(20px, 3vw, 40px);
+        margin-bottom: clamp(1px, 0.3vw, 3px);
+    }
+    
+    .empty-title {
+        font-size: clamp(12px, 2vw, 16px);
+        margin-bottom: clamp(1px, 0.2vw, 2px);
+    }
+    
+    .empty-description {
+        font-size: clamp(10px, 1.4vw, 13px);
+        max-width: min(160px, 90%);
+        margin-bottom: clamp(1px, 0.2vw, 2px);
+    }
+    
+    .empty-hint {
+        font-size: clamp(8px, 1.2vw, 11px);
+        padding: clamp(4px, 0.8vw, 10px) clamp(8px, 1.2vw, 14px);
+        max-width: min(140px, 90%);
+    }
+}
+
+/* 超小窗口下的进一步优化 */
+@media (max-width: 480px) {
+    .empty-quadrant-state {
+        padding: clamp(4px, 1vw, 15px);
+        gap: clamp(2px, 0.5vw, 8px);
+        min-height: 70px;
+    }
+    
+    .empty-icon {
+        font-size: clamp(18px, 2.5vw, 36px);
+    }
+    
+    .empty-title {
+        font-size: clamp(11px, 1.8vw, 15px);
+    }
+    
+    .empty-description {
+        font-size: clamp(9px, 1.2vw, 12px);
+        max-width: min(140px, 95%);
+    }
+    
+    .empty-hint {
+        font-size: clamp(7px, 1vw, 10px);
+        padding: clamp(3px, 0.6vw, 8px) clamp(6px, 1vw, 12px);
+        max-width: min(120px, 95%);
+    }
+}
