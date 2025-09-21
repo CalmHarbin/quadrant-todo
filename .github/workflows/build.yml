@@ -11,6 +11,12 @@ on:
         required: true
         default: 'v1.0.0'
 
+permissions:
+  contents: write
+  packages: write
+  issues: write
+  pull-requests: write
+
 jobs:
   build:
     strategy:
@@ -93,5 +99,6 @@ jobs:
             artifacts/*/release/**/*
           draft: false
           prerelease: true
+          generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
